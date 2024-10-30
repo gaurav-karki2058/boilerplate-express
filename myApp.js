@@ -1,44 +1,39 @@
 let express = require('express');
-
+require('dotenv').config();
 let app = express();
 
+// Console.log test
 console.log("Hello World");
 
-function func2(req,res){
-    res.send("Hello Express");
-  }
+//Creating a function
+function func2(req, res) {
+    res.sendFile(absolutePath);
+}
 
-app.get("/",func2);
+let absolutePath = __dirname + "/views/index.html";
+let absPath = __dirname + "/public";
 
+//getting static content from server side
+app.use("/public", express.static(absPath));
 
+//using func2 for get
+app.get("/", func2);
 
+//using env file 
+app.get("/json", (req, res) => {
+    if (process.env.MESSAGE_STYLE === "uppercase") {
+        res.json({ message: "Hello json".toUpperCase() });
+    } else {
+        res.json({ message: "Hello json" });
+    }
+});
 
+//middleware p2
+//If your middleware is defined after your routes, the logger won't execute for those routes.
+//app.use will only work if it is placed above the defined routes.
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- module.exports = app;
+module.exports = app;
