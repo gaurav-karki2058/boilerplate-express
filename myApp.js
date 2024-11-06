@@ -36,4 +36,18 @@ app.use((req, res, next) => {
   next();
 });
 
+//adding a new handler to middleware in get method
+app.get('/now',function(req,res,next){
+    req.time=(new Date()).toString();
+    next();
+},function(req,res){
+    res.json({time:req.time})
+} )
+
 module.exports = app;
+
+//getting request parameters using req.params
+app.get('/:fcc/echo',(req,res)=>{
+    console.log(req.params)
+    res.json({echo:req.params.fcc})
+})
