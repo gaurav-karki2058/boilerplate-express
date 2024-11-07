@@ -44,10 +44,19 @@ app.get('/now',function(req,res,next){
     res.json({time:req.time})
 } )
 
-module.exports = app;
 
 //getting request parameters using req.params
 app.get('/:fcc/echo',(req,res)=>{
     console.log(req.params)
     res.json({echo:req.params.fcc})
 })
+
+//query string in url
+app.get('/name',(req,res)=>{
+    console.log(req.query,"heyheyhey");
+    res.json({name: `${req.query.first} ${req.query.last}` })
+})
+
+
+module.exports = app;
+
