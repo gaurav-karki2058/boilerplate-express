@@ -1,5 +1,6 @@
 let express = require('express');
 require('dotenv').config();
+let bodyParser=require('body-parser');
 let app = express();
 
 // Console.log test
@@ -57,6 +58,12 @@ app.get('/name',(req,res)=>{
     res.json({name: `${req.query.first} ${req.query.last}` })
 })
 
+//getting data from post request http body via bodyparser
+app.use('/name',bodyParser.urlencoded({extended:false}))
+//getting html page user form data
+app.post('/name',(req,res)=>{
+    res.json({name: `${req.body.first} ${req.body.last}`})
+})
 
 module.exports = app;
 
